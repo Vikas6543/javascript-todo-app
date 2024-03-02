@@ -1,0 +1,120 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Georgia, serif;
+    overflow: hidden;
+}
+
+.main-wrapper {
+    background: rgb(243, 106, 82);
+    color: black;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.todo-wrapper {
+    background-color: white;
+    padding: 32px;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width: 380px;
+}
+
+/* heading */
+.heading {
+    text-align: center;
+    font-weight: bold;
+    font-size: 28px;
+    border-bottom: 1px solid gray;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* text input */
+.input-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+}
+
+.text-input {
+    outline: none;
+    border: 1px solid rgb(118, 115, 115);
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 15px;
+    width: 100%;
+}
+
+.text-input:focus {
+    border-color: rgb(243, 106, 82);
+}
+
+/* add button */
+.add-btn {
+    border: none;
+    background-color: rgb(243, 106, 82);
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 10px 25px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* todo list */
+.todo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 18px;
+}
+
+.text {
+    padding: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.completed {
+    text-decoration: line-through;
+}
+
+/* action items */
+.fa-pen-to-square {
+    color: rgb(94, 240, 99);
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.fa-trash {
+    color: red;
+    cursor: pointer;
+}
+
+/* todo message */
+.todo-message {
+    position: absolute;
+    top: 40px;
+    right: -500px;
+    transition: 0.5s;
+    background-color: white;
+    color: rgb(243, 106, 82);
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.show-todo-message {
+    right: 40px;
+}
