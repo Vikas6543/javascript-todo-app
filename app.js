@@ -1,84 +1,101 @@
-// access input field
-const input = document.querySelector('#todo-input');
+// Access input field
+const input = document.querySelector('.text-input');
 
-// Listening to the click event from the "Add" button.
-document.querySelector('#submit').addEventListener('click', () => {
+// Function to display a todo message
+function showTodoMessage(message) {
+  const todoMessage = document.querySelector('.todo-message');
+  const messageTag = document.createElement('p');
+  messageTag.innerText = message;
+  todoMessage.appendChild(messageTag);
+
+  // Show message for 2 seconds
+  todoMessage.classList.add('show-todo-message');
+  setTimeout(() => {
+    todoMessage.classList.toggle('show-todo-message');
+    messageTag.innerText = '';
+  }, 2000);
+}
+
+// Function to add a new todo item
+function addTodo() {
+  // Get the input value
   const inputData = input.value;
 
-  // checking the input field is empty or not
-  if (input.value.length == 0) {
-    const todoMessage = document.querySelector('.todo-message');
-    const messageTag = document.createElement('p');
-    messageTag.innerText = 'Please Enter Todo';
-    todoMessage.appendChild(messageTag);
-
-    todoMessage.classList.add('show-todo-message');
-    setTimeout(() => {
-      todoMessage.classList.toggle('show-todo-message');
-      messageTag.innerText = '';
-    }, 2000);
+  // Check if the input field is empty
+  if (inputData.length === 0) {
+    showTodoMessage('Please Enter Todo');
     return;
   }
 
+  // Clear the input field
   input.value = '';
 
-  // creating todo item element
-  const todo_el = document.createElement('div');
-  todo_el.classList.add('todo-item');
+  // Create todo item element
+  const todo_element = document.createElement('div');
+  todo_element.classList.add('todo-item');
 
-  const todo_text = document.createElement('p');
-  todo_text.classList.add('text');
-  todo_text.innerText = inputData;
+  // Create todo title element
+  const todo_title = document.createElement('p');
+  todo_title.classList.add('todo-title');
+  todo_title.innerText = inputData;
 
-  todo_text.addEventListener('click', () => {
-    todo_text.classList.toggle('completed');
+  // Toggle completion when todo title is clicked
+  todo_title.addEventListener('click', () => {
+    todo_title.classList.toggle('completed');
   });
 
-  todo_el.appendChild(todo_text);
+  // Append todo title to todo item
+  todo_element.appendChild(todo_title);
 
-  const todo_actions_el = document.createElement('div');
-  todo_actions_el.classList.add('action-items');
+  // Create container for edit and delete icons
+  const todo_actions_element = document.createElement('div');
+  todo_actions_element.classList.add('action-items');
 
-  // edit todo icon
-  const todo_edit_el = document.createElement('i');
-  todo_edit_el.classList.add('fa-solid');
-  todo_edit_el.classList.add('fa-pen-to-square');
-  todo_edit_el.classList.add('edit');
+  // Create edit todo icon
+  const todo_edit_element = document.createElement('i');
+  todo_edit_element.classList.add('fa-solid');
+  todo_edit_element.classList.add('fa-pen-to-square');
+  todo_edit_element.classList.add('edit');
 
-  // delete todo icon
-  const todo_delete_el = document.createElement('i');
-  todo_delete_el.classList.add('fa-solid');
-  todo_delete_el.classList.add('fa-trash');
+  // Create delete todo icon
+  const todo_delete_element = document.createElement('i');
+  todo_delete_element.classList.add('fa-solid');
+  todo_delete_element.classList.add('fa-trash');
 
-  todo_actions_el.appendChild(todo_edit_el);
-  todo_actions_el.appendChild(todo_delete_el);
+  // Append edit and delete icons to the container
+  todo_actions_element.appendChild(todo_edit_element);
+  todo_actions_element.appendChild(todo_delete_element);
 
-  todo_el.appendChild(todo_actions_el);
-  // add the todo-item to lists
-  document.querySelector('.todo-lists').appendChild(todo_el);
+  // Append container to todo item
+  todo_element.appendChild(todo_actions_element);
 
-  // edit functionality
-  todo_edit_el.addEventListener('click', (e) => {
-    const selectedText =
-      e.target.parentElement.previousElementSibling.innerHTML;
-    input.value = selectedText;
+  // Add the todo-item to the todo list
+  document.querySelector('.todo-lists').appendChild(todo_element);
+
+  // Attach event listener for editing a todo
+  todo_edit_element.addEventListener('click', editTodo);
+
+  // Attach event listener for deleting a todo
+  todo_delete_element.addEventListener('click', deleteTodo);
+}
+
+// Function to edit a todo item
+function editTodo(e) {
+  const selectedTodo = e.target.parentElement.previousElementSibling.innerText;
+
+  // Set the input field value to the selected text
+  input.value = selectedTodo;
+
+  e.target.parentElement.parentElement.remove();
+}
+
+// Function to delete a todo item
+function deleteTodo(e) {
+  if (confirm('Are you sure you want to delete this todo?')) {
     e.target.parentElement.parentElement.remove();
-  });
+    showTodoMessage('Todo has been deleted');
+  }
+}
 
-  // delete functionality
-  todo_delete_el.addEventListener('click', (e) => {
-    if (confirm('Are you sure you want to delete this todo?')) {
-      document.querySelector('.todo-lists').removeChild(todo_el);
-      const todoMessage = document.querySelector('.todo-message');
-      const messageTag = document.createElement('p');
-      messageTag.innerText = 'Todo has been deleted';
-      todoMessage.appendChild(messageTag);
-
-      todoMessage.classList.add('show-todo-message');
-      setTimeout(() => {
-        todoMessage.classList.toggle('show-todo-message');
-        messageTag.innerText = '';
-      }, 2000);
-    }
-  });
-});
+// Attach event listener for the Add button
+document.querySelector('.submit-btn').addEventListener('click', addTodo);
